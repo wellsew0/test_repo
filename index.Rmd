@@ -1,0 +1,99 @@
+---
+title: "test_repo"
+output: html_document
+date: "2026-02-05"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Markdown
+
+Markdown is a way to make fancy documents. 
+Make sure you "Knit" often -- after every major change -- to mitigate errors. 
+Hashtags are how we make section levels of a doc. 
+
+## Next level 
+### Next level 
+#### Fourth level 
+##### Fifth level   
+
+# Basic formatting
+
+This is **bold.** (that's double asterisks). Or *italics*. Or `code`. 
+
+- this is the start of a list.  
+- next item.   
+- next item. make sure to have space at end of item.  
+
+1. this is a numbered list. 
+2. second item.  
+
+To add a hyperlink, do `[link text](url)` without backticks.    
+For example, [go here](https://www.sewanee.edu)
+
+To link to sections of your document, do `[link text](#section-name)`, without backticks, with hyphens for spaces, and everything lower-cased. For example, [go here](#next-level).  
+
+To add more vertical space between blocks of text, use this: "&nbsp;" without quotes. 
+&nbsp;  
+
+&nbsp; 
+
+Should be more space now. 
+
+**To include an image -- fun!** 
+first put an image inside the folder where your `Rmd` file is located. 
+Then type `![](full_image_filename_here){width="50%"}`
+
+![](nz_class.jpeg){width="50%"}
+
+# RMarkdown 
+
+`RMarkdown` is just `Markdown` with `R` code woven in.  
+
+You can R stuff in the same line as text. For example, `r 3+3` will show as 6. 
+(It would like backtick lower-case-r space then code then backtick).  
+
+You can also do a full-multi-line CHUNK of R stuff:  
+
+```{r chunk-name }
+# ```{r}
+3 + 3
+# ```
+```
+
+Settings to control how R chunks appear: 
+
+- `eval = TRUE`: which actually runs the code; if `FALSE`, it shows the code but doesn't run it. 
+- `echo = TRUE`: which shows the code; if `FALSE`, the code can run without being seen. 
+- `warnings = FALSE`: which will turn off warnings. 
+
+- `fig.cap = "figure caption"` adds a figure caption. 
+
+- `fig.width = 7` example of figure width. 
+
+- `fig.height = 4` example of figure width. height? -Max
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+```{r read data, }
+library(readr)
+energy <- read_csv("../data/IRENA data.csv", skip=1) 
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
