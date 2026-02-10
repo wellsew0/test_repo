@@ -47,6 +47,7 @@ first put an image inside the folder where your `Rmd` file is located.
 Then type `![](full_image_filename_here){width="50%"}`
 
 ![](../images/cat.jpeg){width="50%"}
+![](../images/RiverBundle.jpeg){width="50%"}
 
 # RMarkdown 
 
