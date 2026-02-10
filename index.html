@@ -401,7 +401,7 @@ without quotes.  </p>
 <p><strong>To include an image – fun!</strong> first put an image inside
 the folder where your <code>Rmd</code> file is located. Then type
 <code>![](full_image_filename_here){width=&quot;50%&quot;}</code></p>
-<p><img role="img" src="nz_class.jpeg" style="width:50.0%" /></p>
+<p><img role="img" src="cat.jpeg" style="width:50.0%" /></p>
 </div>
 <div id="rmarkdown" class="section level1">
 <h1>RMarkdown</h1>
@@ -458,9 +458,281 @@ energy &lt;- read_csv(&quot;../data/IRENA data.csv&quot;, skip=1) </code></pre>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>energy %&gt;% names</code></pre>
+<pre><code>## [1] &quot;Country/area&quot;           &quot;Technology&quot;             &quot;Data Type&quot;             
+## [4] &quot;Grid connection&quot;        &quot;Year&quot;                   &quot;Electricity statistics&quot;</code></pre>
+<pre class="r"><code>energy %&gt;% head</code></pre>
+<pre><code>## # A tibble: 6 × 6
+##   `Country/area` Technology      `Data Type`             `Grid connection`  Year
+##   &lt;chr&gt;          &lt;chr&gt;           &lt;chr&gt;                   &lt;chr&gt;             &lt;dbl&gt;
+## 1 Afghanistan    Total renewable Electricity Generation… On-grid            2000
+## 2 Afghanistan    Total renewable Electricity Generation… On-grid            2001
+## 3 Afghanistan    Total renewable Electricity Generation… On-grid            2002
+## 4 Afghanistan    Total renewable Electricity Generation… On-grid            2003
+## 5 Afghanistan    Total renewable Electricity Generation… On-grid            2004
+## 6 Afghanistan    Total renewable Electricity Generation… On-grid            2005
+## # ℹ 1 more variable: `Electricity statistics` &lt;chr&gt;</code></pre>
+<pre class="r"><code>energy %&gt;% tail </code></pre>
+<pre><code>## # A tibble: 6 × 6
+##   `Country/area` Technology `Data Type`                  `Grid connection`  Year
+##   &lt;chr&gt;          &lt;chr&gt;      &lt;chr&gt;                        &lt;chr&gt;             &lt;dbl&gt;
+## 1 Zimbabwe       Nuclear    Electricity Generation (GWh) On-grid            2019
+## 2 Zimbabwe       Nuclear    Electricity Generation (GWh) On-grid            2020
+## 3 Zimbabwe       Nuclear    Electricity Generation (GWh) On-grid            2021
+## 4 Zimbabwe       Nuclear    Electricity Generation (GWh) On-grid            2022
+## 5 Zimbabwe       Nuclear    Electricity Generation (GWh) On-grid            2023
+## 6 Zimbabwe       Nuclear    Electricity Generation (GWh) On-grid            2024
+## # ℹ 1 more variable: `Electricity statistics` &lt;chr&gt;</code></pre>
+<pre class="r"><code>energy %&gt;% pull(Technology) %&gt;% unique %&gt;% sort</code></pre>
+<pre><code>##  [1] &quot;Biogas&quot;               &quot;Coal and peat&quot;        &quot;Geothermal energy&quot;   
+##  [4] &quot;Natural gas&quot;          &quot;Nuclear&quot;              &quot;Offshore wind energy&quot;
+##  [7] &quot;Oil&quot;                  &quot;Onshore wind energy&quot;  &quot;Renewable hydropower&quot;
+## [10] &quot;Solar photovoltaic&quot;   &quot;Total non-renewable&quot;  &quot;Total renewable&quot;</code></pre>
+<pre class="r"><code>energy %&gt;% pull(`Country/area`) %&gt;% unique</code></pre>
+<pre><code>##   [1] &quot;Afghanistan&quot;                                               
+##   [2] &quot;Albania&quot;                                                   
+##   [3] &quot;Algeria&quot;                                                   
+##   [4] &quot;American Samoa&quot;                                            
+##   [5] &quot;Andorra&quot;                                                   
+##   [6] &quot;Angola&quot;                                                    
+##   [7] &quot;Anguilla&quot;                                                  
+##   [8] &quot;Antigua and Barbuda&quot;                                       
+##   [9] &quot;Argentina&quot;                                                 
+##  [10] &quot;Armenia&quot;                                                   
+##  [11] &quot;Aruba&quot;                                                     
+##  [12] &quot;Australia&quot;                                                 
+##  [13] &quot;Austria&quot;                                                   
+##  [14] &quot;Azerbaijan&quot;                                                
+##  [15] &quot;Bahamas (the)&quot;                                             
+##  [16] &quot;Bahrain&quot;                                                   
+##  [17] &quot;Bangladesh&quot;                                                
+##  [18] &quot;Barbados&quot;                                                  
+##  [19] &quot;Belarus&quot;                                                   
+##  [20] &quot;Belgium&quot;                                                   
+##  [21] &quot;Belize&quot;                                                    
+##  [22] &quot;Benin&quot;                                                     
+##  [23] &quot;Bhutan&quot;                                                    
+##  [24] &quot;Bolivia (Plurinational State of)&quot;                          
+##  [25] &quot;Bonaire, Sint Eustatius and Saba&quot;                          
+##  [26] &quot;Bosnia and Herzegovina&quot;                                    
+##  [27] &quot;Botswana&quot;                                                  
+##  [28] &quot;Brazil&quot;                                                    
+##  [29] &quot;British Virgin Islands&quot;                                    
+##  [30] &quot;Brunei Darussalam&quot;                                         
+##  [31] &quot;Bulgaria&quot;                                                  
+##  [32] &quot;Burkina Faso&quot;                                              
+##  [33] &quot;Burundi&quot;                                                   
+##  [34] &quot;Cabo Verde&quot;                                                
+##  [35] &quot;Cambodia&quot;                                                  
+##  [36] &quot;Cameroon&quot;                                                  
+##  [37] &quot;Canada&quot;                                                    
+##  [38] &quot;Cayman Islands&quot;                                            
+##  [39] &quot;Central African Republic (the)&quot;                            
+##  [40] &quot;Chad&quot;                                                      
+##  [41] &quot;Chile&quot;                                                     
+##  [42] &quot;China&quot;                                                     
+##  [43] &quot;China, Hong Kong Special Administrative Region&quot;            
+##  [44] &quot;Chinese Taipei&quot;                                            
+##  [45] &quot;Colombia&quot;                                                  
+##  [46] &quot;Comoros (the)&quot;                                             
+##  [47] &quot;Congo (the)&quot;                                               
+##  [48] &quot;Cook Islands (the)&quot;                                        
+##  [49] &quot;Costa Rica&quot;                                                
+##  [50] &quot;Croatia&quot;                                                   
+##  [51] &quot;Cuba&quot;                                                      
+##  [52] &quot;Cura\xe7ao&quot;                                                
+##  [53] &quot;Cyprus&quot;                                                    
+##  [54] &quot;Czechia&quot;                                                   
+##  [55] &quot;C\xf4te d&#39;Ivoire&quot;                                          
+##  [56] &quot;Democratic People&#39;s Republic of Korea (the)&quot;               
+##  [57] &quot;Democratic Republic of the Congo (the)&quot;                    
+##  [58] &quot;Denmark&quot;                                                   
+##  [59] &quot;Djibouti&quot;                                                  
+##  [60] &quot;Dominica&quot;                                                  
+##  [61] &quot;Dominican Republic (the)&quot;                                  
+##  [62] &quot;Ecuador&quot;                                                   
+##  [63] &quot;Egypt&quot;                                                     
+##  [64] &quot;El Salvador&quot;                                               
+##  [65] &quot;Equatorial Guinea&quot;                                         
+##  [66] &quot;Eritrea&quot;                                                   
+##  [67] &quot;Estonia&quot;                                                   
+##  [68] &quot;Eswatini&quot;                                                  
+##  [69] &quot;Ethiopia&quot;                                                  
+##  [70] &quot;Falkland Islands (Malvinas)&quot;                               
+##  [71] &quot;Faroe Islands&quot;                                             
+##  [72] &quot;Fiji&quot;                                                      
+##  [73] &quot;Finland&quot;                                                   
+##  [74] &quot;France&quot;                                                    
+##  [75] &quot;French Guiana&quot;                                             
+##  [76] &quot;French Polynesia&quot;                                          
+##  [77] &quot;Gabon&quot;                                                     
+##  [78] &quot;Gambia (the)&quot;                                              
+##  [79] &quot;Georgia&quot;                                                   
+##  [80] &quot;Germany&quot;                                                   
+##  [81] &quot;Ghana&quot;                                                     
+##  [82] &quot;Greece&quot;                                                    
+##  [83] &quot;Greenland&quot;                                                 
+##  [84] &quot;Grenada&quot;                                                   
+##  [85] &quot;Guadeloupe&quot;                                                
+##  [86] &quot;Guam&quot;                                                      
+##  [87] &quot;Guatemala&quot;                                                 
+##  [88] &quot;Guinea&quot;                                                    
+##  [89] &quot;Guinea-Bissau&quot;                                             
+##  [90] &quot;Guyana&quot;                                                    
+##  [91] &quot;Haiti&quot;                                                     
+##  [92] &quot;Honduras&quot;                                                  
+##  [93] &quot;Hungary&quot;                                                   
+##  [94] &quot;Iceland&quot;                                                   
+##  [95] &quot;India&quot;                                                     
+##  [96] &quot;Indonesia&quot;                                                 
+##  [97] &quot;Iran (Islamic Republic of)&quot;                                
+##  [98] &quot;Iraq&quot;                                                      
+##  [99] &quot;Ireland&quot;                                                   
+## [100] &quot;Montenegro&quot;                                                
+## [101] &quot;South Sudan&quot;                                               
+## [102] &quot;Sint Maarten (Dutch Part)&quot;                                 
+## [103] &quot;Israel&quot;                                                    
+## [104] &quot;Italy&quot;                                                     
+## [105] &quot;Jamaica&quot;                                                   
+## [106] &quot;Japan&quot;                                                     
+## [107] &quot;Jordan&quot;                                                    
+## [108] &quot;Kazakhstan&quot;                                                
+## [109] &quot;Kenya&quot;                                                     
+## [110] &quot;Kiribati&quot;                                                  
+## [111] &quot;Kosovo&quot;                                                    
+## [112] &quot;Kuwait&quot;                                                    
+## [113] &quot;Kyrgyzstan&quot;                                                
+## [114] &quot;Lao People&#39;s Democratic Republic (the)&quot;                    
+## [115] &quot;Latvia&quot;                                                    
+## [116] &quot;Lebanon&quot;                                                   
+## [117] &quot;Lesotho&quot;                                                   
+## [118] &quot;Liberia&quot;                                                   
+## [119] &quot;Libya&quot;                                                     
+## [120] &quot;Lithuania&quot;                                                 
+## [121] &quot;Luxembourg&quot;                                                
+## [122] &quot;Madagascar&quot;                                                
+## [123] &quot;Malawi&quot;                                                    
+## [124] &quot;Malaysia&quot;                                                  
+## [125] &quot;Maldives&quot;                                                  
+## [126] &quot;Mali&quot;                                                      
+## [127] &quot;Malta&quot;                                                     
+## [128] &quot;Marshall Islands (the)&quot;                                    
+## [129] &quot;Martinique&quot;                                                
+## [130] &quot;Mauritania&quot;                                                
+## [131] &quot;Mauritius&quot;                                                 
+## [132] &quot;Mayotte&quot;                                                   
+## [133] &quot;Mexico&quot;                                                    
+## [134] &quot;Micronesia (Federated States of)&quot;                          
+## [135] &quot;Mongolia&quot;                                                  
+## [136] &quot;Montserrat&quot;                                                
+## [137] &quot;Morocco&quot;                                                   
+## [138] &quot;Mozambique&quot;                                                
+## [139] &quot;Myanmar&quot;                                                   
+## [140] &quot;Namibia&quot;                                                   
+## [141] &quot;Nauru&quot;                                                     
+## [142] &quot;Nepal&quot;                                                     
+## [143] &quot;Netherlands (Kingdom of the)&quot;                              
+## [144] &quot;New Caledonia&quot;                                             
+## [145] &quot;New Zealand&quot;                                               
+## [146] &quot;Nicaragua&quot;                                                 
+## [147] &quot;Niger (the)&quot;                                               
+## [148] &quot;Nigeria&quot;                                                   
+## [149] &quot;Niue&quot;                                                      
+## [150] &quot;North Macedonia&quot;                                           
+## [151] &quot;Norway&quot;                                                    
+## [152] &quot;Oman&quot;                                                      
+## [153] &quot;Pakistan&quot;                                                  
+## [154] &quot;Palau&quot;                                                     
+## [155] &quot;Panama&quot;                                                    
+## [156] &quot;Papua New Guinea&quot;                                          
+## [157] &quot;Paraguay&quot;                                                  
+## [158] &quot;Peru&quot;                                                      
+## [159] &quot;Philippines (the)&quot;                                         
+## [160] &quot;Poland&quot;                                                    
+## [161] &quot;Portugal&quot;                                                  
+## [162] &quot;Puerto Rico&quot;                                               
+## [163] &quot;Qatar&quot;                                                     
+## [164] &quot;Republic of Korea (the)&quot;                                   
+## [165] &quot;Republic of Moldova (the)&quot;                                 
+## [166] &quot;Romania&quot;                                                   
+## [167] &quot;Russian Federation (the)&quot;                                  
+## [168] &quot;Rwanda&quot;                                                    
+## [169] &quot;R\xe9union&quot;                                                
+## [170] &quot;Saint Barth\xe9lemy&quot;                                       
+## [171] &quot;Saint Kitts and Nevis&quot;                                     
+## [172] &quot;Saint Lucia&quot;                                               
+## [173] &quot;Saint Martin (French Part)&quot;                                
+## [174] &quot;Saint Pierre and Miquelon&quot;                                 
+## [175] &quot;Saint Vincent and the Grenadines&quot;                          
+## [176] &quot;Samoa&quot;                                                     
+## [177] &quot;Sao Tome and Principe&quot;                                     
+## [178] &quot;Saudi Arabia&quot;                                              
+## [179] &quot;Senegal&quot;                                                   
+## [180] &quot;Serbia&quot;                                                    
+## [181] &quot;Seychelles&quot;                                                
+## [182] &quot;Sierra Leone&quot;                                              
+## [183] &quot;Singapore&quot;                                                 
+## [184] &quot;Slovakia&quot;                                                  
+## [185] &quot;Slovenia&quot;                                                  
+## [186] &quot;Solomon Islands&quot;                                           
+## [187] &quot;Somalia&quot;                                                   
+## [188] &quot;South Africa&quot;                                              
+## [189] &quot;South Georgia and the South Sandwich Islands&quot;              
+## [190] &quot;Spain&quot;                                                     
+## [191] &quot;Sri Lanka&quot;                                                 
+## [192] &quot;State of Palestine (the)&quot;                                  
+## [193] &quot;Sudan (the)&quot;                                               
+## [194] &quot;Suriname&quot;                                                  
+## [195] &quot;Sweden&quot;                                                    
+## [196] &quot;Switzerland&quot;                                               
+## [197] &quot;Syrian Arab Republic (the)&quot;                                
+## [198] &quot;Tajikistan&quot;                                                
+## [199] &quot;Thailand&quot;                                                  
+## [200] &quot;Timor-Leste&quot;                                               
+## [201] &quot;Togo&quot;                                                      
+## [202] &quot;Tokelau&quot;                                                   
+## [203] &quot;Tonga&quot;                                                     
+## [204] &quot;Trinidad and Tobago&quot;                                       
+## [205] &quot;Tunisia&quot;                                                   
+## [206] &quot;Turkmenistan&quot;                                              
+## [207] &quot;Turks and Caicos Islands&quot;                                  
+## [208] &quot;Tuvalu&quot;                                                    
+## [209] &quot;T\xfcrkiye&quot;                                               
+## [210] &quot;Uganda&quot;                                                    
+## [211] &quot;Ukraine&quot;                                                   
+## [212] &quot;United Arab Emirates (the)&quot;                                
+## [213] &quot;United Kingdom of Great Britain and Northern Ireland (the)&quot;
+## [214] &quot;United Republic of Tanzania (the)&quot;                         
+## [215] &quot;United States Virgin Islands&quot;                              
+## [216] &quot;United States of America (the)&quot;                            
+## [217] &quot;Uruguay&quot;                                                   
+## [218] &quot;Uzbekistan&quot;                                                
+## [219] &quot;Vanuatu&quot;                                                   
+## [220] &quot;Venezuela (Bolivarian Republic of)&quot;                        
+## [221] &quot;Viet Nam&quot;                                                  
+## [222] &quot;Yemen&quot;                                                     
+## [223] &quot;Zambia&quot;                                                    
+## [224] &quot;Zimbabwe&quot;</code></pre>
+<div id="filtering-code-now" class="section level3">
+<h3>Filtering code now</h3>
+<p>Here is a new section where I talk about what I am doing</p>
+<pre class="r"><code># filter data
+fenergy &lt;-
+  energy %&gt;%
+  filter(`Country/area` == &#39;United States of America (the)&#39;)</code></pre>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the
 code chunk to prevent printing of the R code that generated the
 plot.</p>
+</div>
 </div>
 </div>
 

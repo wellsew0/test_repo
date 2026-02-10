@@ -46,7 +46,7 @@ Should be more space now.
 first put an image inside the folder where your `Rmd` file is located. 
 Then type `![](full_image_filename_here){width="50%"}`
 
-![](nz_class.jpeg){width="50%"}
+![](cat.jpeg){width="50%"}
 
 # RMarkdown 
 
@@ -94,6 +94,24 @@ plot(pressure)
 ```{r read data, }
 library(readr)
 energy <- read_csv("../data/IRENA data.csv", skip=1) 
+```
+```{r explore data, }
+library(dplyr)
+energy %>% names
+energy %>% head
+energy %>% tail 
+energy %>% pull(Technology) %>% unique %>% sort
+energy %>% pull(`Country/area`) %>% unique
+```
+
+### Filtering code now
+Here is a new section where I talk about what I am doing
+
+```{r}
+# filter data
+fenergy <-
+  energy %>%
+  filter(`Country/area` == 'United States of America (the)')
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
